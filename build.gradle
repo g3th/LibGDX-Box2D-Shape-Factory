@@ -1,0 +1,36 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    mavenLocal()
+    google()
+  }
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.5.2"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+
+  }
+}
+
+
+configure(subprojects - project(':android')) {
+  apply plugin: 'java-library'
+  apply plugin: 'kotlin'
+  sourceCompatibility = 11
+
+  compileJava {
+    options.incremental = true
+  }
+  compileKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+  compileTestKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+
+}
+
+subprojects {
+  version = '$projectVersion'
+  ext.appName = 'shapesFactory'
+  repositories {
+    mavenCentral()
+  }
+}
+
